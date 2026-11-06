@@ -1,13 +1,32 @@
-import sys
-import os
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from threading import Thread
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "app", "REST"))
+from app.notifications.docs_app import notifications_docs_app
+from app.REST.docs_app import products_docs_app
 
-from app.REST.web.routes import router
+from app.notifications.web.routes import router as notifications_router
+from app.notifications.service.notification_worker import run_worker
+from app.REST.web.routes import router as products_router
 
-app = FastAPI(title="Laboratorium 1 - REST API")
-app.include_router(router)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    thread = Thread(target=run_worker, daemon=True)
+    thread.start()
+    yield
+
+
+app = FastAPI(
+    title="Laboratorium 2 - Powiadomienia",
+    lifespan=lifespan,
+)
+
+app.include_router(products_router, prefix="/api/v1")
+app.include_router(notifications_router, prefix="/api/v1")
+
+app.mount("/products-docs", products_docs_app)
+app.mount("/notifications-docs", notifications_docs_app)
 
 if __name__ == "__main__":
     import uvicorn

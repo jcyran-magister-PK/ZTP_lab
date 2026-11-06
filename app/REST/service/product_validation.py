@@ -1,7 +1,7 @@
 from app.REST.data.forbidden_name_repository import get_forbidden_name_by_name
-from data.category_repository import get_category_by_id
-from data.product_repository import get_product_by_id, get_product_by_name
-from model.product_schema import ProductCreate
+from app.REST.data.category_repository import get_category_by_id
+from app.REST.data.product_repository import get_product_by_id, get_product_by_name
+from app.REST.model.product_schema import ProductCreate
 from sqlalchemy.orm import Session
 
 class ValidationError(Exception):

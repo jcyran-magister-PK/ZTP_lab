@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy import JSON, DateTime, Integer, String, func
 from sqlalchemy.orm import Mapped, mapped_column
 
-from data.database import Base
+from app.db.database import Base
 
 
 class ProductHistoryORM(Base):

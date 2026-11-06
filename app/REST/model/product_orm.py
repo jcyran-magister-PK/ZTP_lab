@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Integer, String, Numeric, ForeignKey
 
-from data.database import Base
+from app.db.database import Base
 
 
 class ForbiddenNamesORM(Base):

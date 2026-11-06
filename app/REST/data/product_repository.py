@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import select
 
-from model.product_orm import ProductORM
-from data.database import Base, engine
+from app.REST.model.product_orm import ProductORM
+from app.db.database import Base, engine
 
 def create_tables():
     Base.metadata.create_all(engine)

@@ -2,7 +2,7 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
-from data.database import engine, SessionLocal, get_db
+from app.db.database import engine, SessionLocal, get_db
 from main import app
 
 @pytest.fixture(scope="function")

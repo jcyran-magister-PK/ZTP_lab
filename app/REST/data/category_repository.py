@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 
-from model.product_orm import CategoriesORM
-from data.database import Base, engine
+from app.REST.model.product_orm import CategoriesORM
+from app.db.database import Base, engine
 
 
 def create_tables():

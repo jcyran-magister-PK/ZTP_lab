@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import desc, select
 
-from model.history_orm import ProductHistoryORM
-from data.database import Base, engine
+from app.REST.model.history_orm import ProductHistoryORM
+from app.db.database import Base, engine
 
 
 def create_tables():

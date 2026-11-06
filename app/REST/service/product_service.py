@@ -1,11 +1,11 @@
 from typing import Optional
 
 from app.REST.service.product_history_service import append_history
-from model.product_orm import ProductORM
-from service.product_validation import ConflictError, ResourceNotFoundError, validate_category_exists_id, validate_product_exists_id, validate_product_exists_name, validate_product_values
+from app.REST.model.product_orm import ProductORM
+from app.REST.service.product_validation import ConflictError, ResourceNotFoundError, validate_category_exists_id, validate_product_exists_id, validate_product_exists_name, validate_product_values
 from sqlalchemy.orm import Session
-from data.product_repository import add_product, delete_product, get_all_products, save_product
-from model.product_schema import ProductCreate
+from app.REST.data.product_repository import add_product, delete_product, get_all_products, save_product
+from app.REST.model.product_schema import ProductCreate
 
 
 def list_products(db: Session, id: Optional[int]=None):

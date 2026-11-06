@@ -1,9 +1,9 @@
 from contextlib import contextmanager
 
 from sqlalchemy.orm import Session
-from data.product_history_repository import add_product_history, get_product_history_by_product_id
-from model.history_orm import ProductHistoryORM
-from model.product_orm import ProductORM
+from app.REST.data.product_history_repository import add_product_history, get_product_history_by_product_id
+from app.REST.model.history_orm import ProductHistoryORM
+from app.REST.model.product_orm import ProductORM
 
 
 from contextlib import contextmanager

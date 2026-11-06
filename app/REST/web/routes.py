@@ -1,24 +1,23 @@
 from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
-from sqlalchemy.exc import IntegrityError
 
-from model.history_schema import ProductHistoryEntry
-from service.product_validation import ConflictError, ResourceNotFoundError, ValidationError
-from service.product_history_service import list_history
-from service.product_service import create_product, list_products, remove_product, replace_product
-from data.database import get_db
-from model.product_schema import Product, ProductCreate
-
-
-router = APIRouter()
+from app.REST.model.history_schema import ProductHistoryEntry
+from app.REST.service.product_validation import ConflictError, ResourceNotFoundError, ValidationError
+from app.REST.service.product_history_service import list_history
+from app.REST.service.product_service import create_product, list_products, remove_product, replace_product
+from app.db.database import get_db
+from app.REST.model.product_schema import Product, ProductCreate
 
 
-@router.get("/api/v1/products", response_model=list[Product])
+router = APIRouter(tags=["Products"])
+
+
+@router.get("/products", response_model=list[Product])
 def get_products_endpoint(db: Session = Depends(get_db)):
     return list_products(db)
 
 
-@router.get("/api/v1/products/{id}")
+@router.get("/products/{id}")
 def get_product_by_id_endpoint(id: int, db: Session = Depends(get_db)):
     try:
         return list_products(db, id)
@@ -26,7 +25,7 @@ def get_product_by_id_endpoint(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail=repr(err))
 
 
-@router.post("/api/v1/products", response_model=Product, status_code=201)
+@router.post("/products", response_model=Product, status_code=201)
 def post_product_endpoint(payload: ProductCreate, db: Session = Depends(get_db)):
     try:
         return create_product(db, payload)
@@ -38,7 +37,7 @@ def post_product_endpoint(payload: ProductCreate, db: Session = Depends(get_db))
         raise HTTPException(status_code=409, detail=repr(err))
 
 
-@router.put("/api/v1/products/{id}", response_model=Product, status_code=201)
+@router.put("/products/{id}", response_model=Product, status_code=201)
 def put_product_endpoint(id: int, payload: ProductCreate, db: Session = Depends(get_db)):
     try:
         product = replace_product(db, id, payload)
@@ -53,7 +52,7 @@ def put_product_endpoint(id: int, payload: ProductCreate, db: Session = Depends(
     return product
 
 
-@router.delete("/api/v1/products/{id}", status_code=204)
+@router.delete("/products/{id}", status_code=204)
 def delete_product_endpoint(id: int, db: Session = Depends(get_db)):
     try:
         if not remove_product(db, id):
@@ -65,7 +64,7 @@ def delete_product_endpoint(id: int, db: Session = Depends(get_db)):
 
 
 
-@router.get("/api/v1/products/{id}/history", response_model=list[ProductHistoryEntry])
+@router.get("/products/{id}/history", response_model=list[ProductHistoryEntry])
 def get_product_history_by_id_endpoint(id: int, db: Session = Depends(get_db)):
     history = list_history(db, id)
 

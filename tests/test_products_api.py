@@ -11,6 +11,7 @@ def test_post_products_creates_product_successfully(client):
     
     response = client.post("/api/v1/products", json=payload)
     
+    print(response.json())
     assert response.status_code == 201
     data = response.json()
     assert data["name"] == payload["name"]
